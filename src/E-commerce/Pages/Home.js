@@ -4,27 +4,28 @@ import data from '../data/NewArrivals'
 import HomeComponent from '../Components/HomeComponent';
 
 function Home() {
- const [count , setCount] = useState(0);
- const [handleArray , setHandleArray] = useState(data);
+ const [cart, setCart] = useState({});
 
- 
- const handleAdd =(value)=>{
-  
-  setHandleArray(data.map((item)=>{
-     if(item.id === value.id){
-      console.log({...item ,  clickedOn : true})
-        return {...item, clickedOn: true }
-     }else{
-      return item;
-     }
-}
-    
-));   
-  return setCount (count + 1); 
+const addToCart = (item) => {
+  const cartItem = cart[item.id];
+ if(cartItem) {
+  setCart({ ...cart, [item.id]: { item, count: cartItem.count + 1} })
+ } else {
+  setCart({ ...cart, [item.id]: { item, count: 1}})
  }
+}
+
+const removeFromCart = (item) => {
+  const cartItem = cart[item.id];
+  if(cartItem && cartItem.count > 0) {
+    setCart({ ...cart, [item.id]: { item, count: cartItem.count - 1} })
+   } else {
+    setCart({ ...cart, [item.id]: undefined })
+   }
+}
  
 
-  return (
+return (
     <div>
     <div className=' h-auto p-20 bg-no-repeat rounded-md shadow-sm bg-cover bg-center sm:h-screen   sm:w-full' style={{background:`url(${First_lunm} )`,
 
@@ -41,9 +42,14 @@ function Home() {
 </div>
 
   <div className='grid grid-cols-1  mt-28 mx-20 gap-2 sm:grid-cols-3'>
-    {handleArray.map((items)=>{
+    {data.map((item)=>{
        return(
-        <HomeComponent handleAdd={handleAdd} items={items} count={count} setCount={setCount} image ={items.image}  handleArray ={handleArray} setHandleArray={setHandleArray} description={items.description} Title ={items.Title}  category ={items.category} clickedOn={items.clickedOn}/>
+        <HomeComponent 
+          item={item} 
+          cart={cart} 
+          addToCart={addToCart} 
+          removeFromCart={removeFromCart} 
+        />
        )
     })}
   </div>
