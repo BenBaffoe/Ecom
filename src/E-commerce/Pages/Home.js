@@ -7,18 +7,18 @@ function Home() {
  const [cart, setCart] = useState({});
 
 const addToCart = (item) => {
-  const cartItem = cart[item.id];
- if(cartItem) {
-  setCart({ ...cart, [item.id]: { item, count: cartItem.count + 1} })
+  const count = cart[item.id];
+ if(count) {
+  setCart({ ...cart, [item.id]: count + 1 })
  } else {
-  setCart({ ...cart, [item.id]: { item, count: 1}})
+  setCart({ ...cart, [item.id]:  1 })
  }
 }
 
 const removeFromCart = (item) => {
-  const cartItem = cart[item.id];
-  if(cartItem && cartItem.count > 0) {
-    setCart({ ...cart, [item.id]: { item, count: cartItem.count - 1} })
+  const count = cart[item.id];
+  if(count && count > 0) {
+    setCart({ ...cart, [item.id]: count - 1 })
    } else {
     setCart({ ...cart, [item.id]: undefined })
    }
@@ -45,6 +45,7 @@ return (
     {data.map((item)=>{
        return(
         <HomeComponent 
+          key={item.id}
           item={item} 
           cart={cart} 
           addToCart={addToCart} 

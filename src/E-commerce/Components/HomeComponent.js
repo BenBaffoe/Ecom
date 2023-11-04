@@ -12,7 +12,7 @@ function HomeComponent({ item, cart, addToCart, removeFromCart }) {
     <p className='px-4'>{item.description}</p>
     <div className='flex  space-x-10 pt-4 pb-4 items-center justify-center'>
     <FontAwesomeIcon className='cursor-pointer' icon={faSubtract}  color='black' onClick={() => removeFromCart(item)} />
-      <div className='text-center'>{cart[item.id]?.count ?? 0}</div>  
+      <div className='text-center'>{cart[item.id] ?? 0}</div>  
     <FontAwesomeIcon className='cursor-pointer' icon={faAdd} onClick={() => addToCart(item)} color='black' />
     </div>
     <div className='flex space-x-2 items-center justify-center'>
